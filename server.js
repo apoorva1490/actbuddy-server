@@ -33,7 +33,6 @@ var Sport = mongoose.model('Sport', {
 });
 
 var User = mongoose.model('User', {
-    id: String,
     firstname: String,
     lastname: String,
     email: String,
@@ -41,6 +40,7 @@ var User = mongoose.model('User', {
     about: String,
     profilepic: String,
     password: String,
+    gender: String,
     activities: [
         {
             name: String,
@@ -79,6 +79,116 @@ function getRandomInt(min, max) {
 
 User.remove({}, function (res) {
     console.log("removed records");
+});
+
+
+
+User.count({}, function (err, count) {
+    console.log("Session: " + count);
+
+    if (count === 0) {
+
+        var recordsToGenerate = 10;
+        
+     
+
+
+        var firstname = [
+            'Jane',
+            'John',
+            'Mary',
+            'Claire',
+            'Howard',
+            'Manny',
+            'Robin',
+            'Mark'
+        ];
+
+        var gender = [
+            '1',
+            '2'
+        ]
+
+          var lastname = [
+            'Janet',
+            'Johnson',
+            'Millard',
+            'Kumar',
+            'Nottam',
+            'Down',
+            'Elon',
+            'Twain'
+        ];
+
+        var locations = [
+            'Bedok',
+            'Jurong',
+            'Orchard',
+            'Woodlands'
+        ]
+
+        var dates = [
+            '2013-06-14',
+            '2016-06-16',
+            '2012-06-18',
+            '2000-01-11',
+            '1990-02-12'
+        ]
+
+
+        var sports = [
+            'Tennis',
+            'Squash',
+            'Soccer',
+            'Cycling'
+        ];
+
+        // For testing purposes, all rooms will be booked out from:
+        // 18th May 2017 to 25th May 2017, and
+        // 29th Jan 2018 to 31 Jan 2018
+
+           /*  id: String,
+    firstname: String,
+    lastname: String,
+    email: String,
+    dob: Date,
+    about: String,
+    profilepic: String,
+    password: String,
+    gender: String,
+    activities: */
+
+        for (var i = 0; i < recordsToGenerate; i++) {
+            var newUser = new User({
+                firstname: firstname[getRandomInt(0, 7)],
+                lastname: lastname [getRandomInt(0,7)],
+                about: firstname[getRandomInt(0, 7)],
+                dob: dates[getRandomInt(0, 4)],
+                gender: gender[getRandomInt(0,1)],
+                activities: [
+                    {
+                        id: sports[getRandomInt(0,3)],
+                        rating: getRandomInt(0, 5)
+                    },
+                    {
+                        id: sports[getRandomInt(0,3)],
+                        rating: getRandomInt(0, 5)
+                    }
+
+                ]
+                // reserved: [
+                //     {from: '1970-01-01', to: '1970-01-02'},
+                //     {from: '2017-04-18', to: '2017-04-23'},
+                //     {from: '2018-01-29', to: '2018-01-30'}
+                // ]
+            });
+
+            newUser.save(function (err, doc) {
+                console.log("Created test document: " + doc._id);
+            });
+        }
+
+    }
 });
 
 
